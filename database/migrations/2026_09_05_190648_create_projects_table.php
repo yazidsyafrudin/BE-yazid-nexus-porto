@@ -6,20 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->string('title');
+            $table->string('image')->nullable();
+            $table->boolean('featured')->default(false);
+            $table->string('type');
+            $table->string('category');
+            $table->text('description_id');
+            $table->text('description_en');
+            $table->json('stack');
+            $table->json('reactions')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('projects');
