@@ -7,59 +7,64 @@ use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $achievements = Achievement::latest()->get();
+        return response()->json(['status' => 'success', 'data' => $achievements]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'issuer' => 'required|string',
+            'date' => 'required|string',
+            'image' => 'nullable|string',
+            'credential_url' => 'nullable|string',
+            'description_id' => 'nullable|string',
+            'description_en' => 'nullable|string',
+        ]);
+
+        $achievement = Achievement::create($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Pencapaian berhasil ditambahkan!',
+            'data' => $achievement
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Achievement $achievement)
+    public function update(Request $request, $id)
     {
-        //
+        $achievement = Achievement::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'sometimes|string',
+            'issuer' => 'sometimes|string',
+            'date' => 'sometimes|string',
+            'image' => 'nullable|string',
+            'credential_url' => 'nullable|string',
+            'description_id' => 'nullable|string',
+            'description_en' => 'nullable|string',
+        ]);
+
+        $achievement->update($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Pencapaian berhasil diperbarui!',
+            'data' => $achievement
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Achievement $achievement)
+    public function destroy($id)
     {
-        //
-    }
+        $achievement = Achievement::findOrFail($id);
+        $achievement->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Achievement $achievement)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Achievement $achievement)
-    {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Pencapaian berhasil dihapus!'
+        ]);
     }
 }
