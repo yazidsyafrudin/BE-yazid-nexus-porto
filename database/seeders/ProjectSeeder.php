@@ -106,8 +106,6 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ($projects as $proj) {
-            $proj['stack'] = json_encode($proj['stack']);
-            $proj['reactions'] = json_encode($proj['reactions']);
             Project::updateOrCreate(['slug' => $proj['slug']], $proj);
         }
     }
