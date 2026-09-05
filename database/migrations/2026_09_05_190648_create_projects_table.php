@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
@@ -14,16 +17,20 @@ return new class extends Migration
             $table->string('title');
             $table->string('image')->nullable();
             $table->boolean('featured')->default(false);
-            $table->string('type');
-            $table->string('category');
+            $table->string('type'); // web, mobile, desktop
+            $table->string('category'); // personal, freelance, internship, client
             $table->text('description_id');
             $table->text('description_en');
-            $table->json('stack');
+            $table->json('stack'); // Simpan array stack seperti ["React", "Laravel"]
             $table->json('reactions')->nullable();
             $table->timestamps();
         });
+
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('projects');
