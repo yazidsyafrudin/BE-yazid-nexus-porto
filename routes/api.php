@@ -7,6 +7,8 @@ use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\EducationController;
 use App\Http\Controllers\AdminAuthController;
 
 // Admin Auth
@@ -32,3 +34,18 @@ Route::get('/achievements', [AchievementController::class, 'index']);
 Route::post('/achievements', [AchievementController::class, 'store']);
 Route::put('/achievements/{id}', [AchievementController::class, 'update']);
 Route::delete('/achievements/{id}', [AchievementController::class, 'destroy']);
+
+// Experiences (Career)
+Route::get('/experiences', [ExperienceController::class, 'index']);
+Route::get('/experiences/{id}', [ExperienceController::class, 'show']);
+Route::post('/experiences', [ExperienceController::class, 'store']);
+Route::put('/experiences/{id}', [ExperienceController::class, 'update']);
+Route::delete('/experiences/{id}', [ExperienceController::class, 'destroy']);
+
+// Education
+Route::get('/education', [EducationController::class, 'index']);
+Route::get('/education/{id}', [EducationController::class, 'show']);
+Route::post('/education', [EducationController::class, 'store']);
+Route::put('/education/{id}', [EducationController::class, 'update']);
+Route::delete('/education/{id}', [EducationController::class, 'destroy']);
+

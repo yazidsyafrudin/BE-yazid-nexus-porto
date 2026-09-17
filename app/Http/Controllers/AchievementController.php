@@ -13,24 +13,32 @@ class AchievementController extends Controller
         return response()->json(['status' => 'success', 'data' => $achievements]);
     }
 
+    public function show($id)
+    {
+        $achievement = Achievement::findOrFail($id);
+        return response()->json(['status' => 'success', 'data' => $achievement]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string',
-            'issuer' => 'required|string',
-            'date' => 'required|string',
+            'title' => 'required|string|max:255',
+            'issuer' => 'required|string|max:255',
+            'date' => 'required|string|max:100',
             'image' => 'nullable|string',
             'credential_url' => 'nullable|string',
             'description_id' => 'nullable|string',
             'description_en' => 'nullable|string',
         ]);
 
+        $validated['description_en'] = $validated['description_en'] ?? $validated['description_id'];
+
         $achievement = Achievement::create($validated);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Pencapaian berhasil ditambahkan!',
-            'data' => $achievement
+            'message' => 'Pencapaian berhasil ditambahkan',
+            'data' => $achievement,
         ], 201);
     }
 
@@ -39,9 +47,9 @@ class AchievementController extends Controller
         $achievement = Achievement::findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'sometimes|string',
-            'issuer' => 'sometimes|string',
-            'date' => 'sometimes|string',
+            'title' => 'sometimes|required|string|max:255',
+            'issuer' => 'sometimes|required|string|max:255',
+            'date' => 'sometimes|required|string|max:100',
             'image' => 'nullable|string',
             'credential_url' => 'nullable|string',
             'description_id' => 'nullable|string',
@@ -52,8 +60,8 @@ class AchievementController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Pencapaian berhasil diperbarui!',
-            'data' => $achievement
+            'message' => 'Pencapaian berhasil diperbarui',
+            'data' => $achievement,
         ]);
     }
 
@@ -64,7 +72,7 @@ class AchievementController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Pencapaian berhasil dihapus!'
+            'message' => 'Pencapaian berhasil dihapus',
         ]);
     }
 }

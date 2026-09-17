@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -22,24 +23,28 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'slug' => 'required|string|unique:projects,slug',
-            'title' => 'required|string',
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:projects,slug',
             'image' => 'nullable|string',
-            'featured' => 'boolean',
+            'featured' => 'nullable|boolean',
             'type' => 'required|string',
             'category' => 'required|string',
             'description_id' => 'required|string',
-            'description_en' => 'required|string',
-            'stack' => 'required|array',
+            'description_en' => 'nullable|string',
+            'stack' => 'nullable|array',
             'reactions' => 'nullable|array',
         ]);
+
+        $validated['slug'] = $validated['slug'] ?: Str::slug($validated['title']);
+        $validated['description_en'] = $validated['description_en'] ?: $validated['description_id'];
+        $validated['featured'] = $validated['featured'] ?? false;
 
         $project = Project::create($validated);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Proyek berhasil ditambahkan!',
-            'data' => $project
+            'message' => 'Proyek berhasil ditambahkan',
+            'data' => $project,
         ], 201);
     }
 
@@ -48,15 +53,15 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
 
         $validated = $request->validate([
-            'slug' => 'sometimes|string|unique:projects,slug,' . $id,
-            'title' => 'sometimes|string',
+            'title' => 'sometimes|required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:projects,slug,' . $id,
             'image' => 'nullable|string',
-            'featured' => 'boolean',
-            'type' => 'sometimes|string',
-            'category' => 'sometimes|string',
-            'description_id' => 'sometimes|string',
-            'description_en' => 'sometimes|string',
-            'stack' => 'sometimes|array',
+            'featured' => 'nullable|boolean',
+            'type' => 'sometimes|required|string',
+            'category' => 'sometimes|required|string',
+            'description_id' => 'sometimes|required|string',
+            'description_en' => 'nullable|string',
+            'stack' => 'nullable|array',
             'reactions' => 'nullable|array',
         ]);
 
@@ -64,8 +69,8 @@ class ProjectController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Proyek berhasil diperbarui!',
-            'data' => $project
+            'message' => 'Proyek berhasil diperbarui',
+            'data' => $project,
         ]);
     }
 
@@ -76,7 +81,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Proyek berhasil dihapus!'
+            'message' => 'Proyek berhasil dihapus',
         ]);
     }
 }
