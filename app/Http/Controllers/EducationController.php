@@ -29,7 +29,7 @@ class EducationController extends Controller
     {
         $validated = $request->validate([
             'school' => 'required|string|max:255',
-            'logo' => 'nullable|string|max:255',
+            'logo' => 'nullable|string',
             'degree_id' => 'required|string|max:255',
             'degree_en' => 'nullable|string|max:255',
             'major_id' => 'required|string|max:255',
@@ -61,7 +61,8 @@ class EducationController extends Controller
 
         $validated = $request->validate([
             'school' => 'sometimes|required|string|max:255',
-            'logo' => 'nullable|string|max:255',
+            'logo' => 'nullable|string',
+
             'degree_id' => 'sometimes|required|string|max:255',
             'degree_en' => 'nullable|string|max:255',
             'major_id' => 'sometimes|required|string|max:255',
