@@ -10,6 +10,11 @@ use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\VisitorController;
+
+// Visitors Tracking & Analytics
+Route::post('/visitors/ping', [VisitorController::class, 'ping']);
+Route::get('/visitors/stats', [VisitorController::class, 'stats']);
 
 // Admin Auth
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
