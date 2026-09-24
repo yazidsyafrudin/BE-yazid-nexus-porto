@@ -54,3 +54,10 @@ Route::post('/education', [EducationController::class, 'store']);
 Route::put('/education/{id}', [EducationController::class, 'update']);
 Route::delete('/education/{id}', [EducationController::class, 'destroy']);
 
+// Settings & CV Management
+use App\Http\Controllers\SettingController;
+Route::get('/settings', [SettingController::class, 'index']);
+Route::post('/settings', [SettingController::class, 'update']);
+Route::post('/settings/upload-cv', [SettingController::class, 'uploadCv']);
+Route::get('/cv', [SettingController::class, 'downloadCv']);
+
