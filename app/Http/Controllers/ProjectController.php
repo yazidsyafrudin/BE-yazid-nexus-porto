@@ -33,6 +33,7 @@ class ProjectController extends Controller
             'description_en' => 'nullable|string',
             'stack' => 'nullable|array',
             'reactions' => 'nullable|array',
+            'demo_url' => 'nullable|string',
         ]);
 
         $validated['slug'] = $validated['slug'] ?: Str::slug($validated['title']);
@@ -63,6 +64,7 @@ class ProjectController extends Controller
             'description_en' => 'nullable|string',
             'stack' => 'nullable|array',
             'reactions' => 'nullable|array',
+            'demo_url' => 'nullable|string',
         ]);
 
         $project->update($validated);

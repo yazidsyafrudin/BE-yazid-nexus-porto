@@ -9,7 +9,7 @@ class Project extends Model
     protected $fillable = [
         'slug', 'title', 'image', 'featured', 'type', 
         'category', 'description_id', 'description_en', 
-        'stack', 'reactions'
+        'stack', 'reactions', 'demo_url'
     ];
 
     protected $casts = [
